@@ -1,4 +1,4 @@
-package com.pronearbymain.entity;
+   package com.pronearbymain.entity;
 
 public enum Role {
     USER,
