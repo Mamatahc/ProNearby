@@ -1,18 +1,42 @@
 import React from "react";
 import "../CSS/Landingpage.css";
-import { FaMapMarkerAlt, FaUsers, FaShieldAlt, FaThumbsUp } from "react-icons/fa";
 
-// 👉 IMPORT YOUR IMAGE
-import A1 from "../../assets/A1.png";   // adjust path if needed
+import {
+  FaMapMarkerAlt,
+  FaUsers,
+  FaShieldAlt,
+  FaThumbsUp,
+  FaArrowRight,
+  FaTools,
+  FaCalendarCheck,
+  FaMoneyBillWave,
+  FaHeadset
+} from "react-icons/fa";
+
+import { useNavigate } from "react-router-dom";
+
+import A1 from "../../assets/A1.png";
 
 export default function LandingPage() {
+
+  const navigate = useNavigate();
+
   return (
+
     <div className="landing">
 
-      {/* Navbar */}
+      {/* ================= NAVBAR ================= */}
+
       <nav className="navbar">
+
         <div className="logo">
-          <FaMapMarkerAlt /> ProNearby
+
+          <FaMapMarkerAlt className="logo-icon" />
+
+          <span>
+            Pro<span>Nearby</span>
+          </span>
+
         </div>
 
         <ul className="nav-links">
@@ -22,94 +46,260 @@ export default function LandingPage() {
           <li>How It Works</li>
           <li>Testimonials</li>
           <li>FAQ</li>
-          <li>Contact</li>
+          <li>Contact Us</li>
         </ul>
 
         <div className="nav-right">
-          <span className="login">Log In</span>
-          <button className="signup">Sign Up</button>
+
+          {/* LOGIN */}
+
+          <button
+            className="login"
+            onClick={() => navigate("/login")}
+          >
+            Log In
+          </button>
+
+          {/* SIGNUP */}
+
+          <button
+            className="signup"
+            onClick={() => navigate("/signup")}
+          >
+            Sign Up
+          </button>
+
         </div>
+
       </nav>
 
-      {/* Hero Section */}
+      {/* ================= HERO ================= */}
+
       <section className="hero">
+
+        {/* LEFT */}
+
         <div className="hero-left">
-          <span className="tag">✨ Your Service, Our Priority</span>
+
+          <div className="tag">
+            ✨ Your Service, Our Priority
+          </div>
 
           <h1>
-            All Your Home Services <br />
+            All Your Home Services
+            <br />
             <span>One Click Away!</span>
           </h1>
 
           <p>
-            ProNearby connects you with trusted professionals for all your home service needs.
-            Fast, reliable and hassle-free booking at your fingertips.
+            ProNearby connects you with trusted professionals
+            for all your home service needs. Fast, reliable
+            and hassle-free service booking right at your
+            fingertips.
           </p>
 
+          {/* BUTTONS */}
+
           <div className="hero-buttons">
-            <button className="primary">Book a Service →</button>
-            <button className="secondary">Explore Services</button>
+
+            <button className="primary">
+              Book a Service
+              <FaArrowRight />
+            </button>
+
+            <button className="secondary">
+              Explore Services
+            </button>
+
           </div>
 
-          {/* Features */}
+          {/* FEATURES */}
+
           <div className="hero-features">
-            <div>
-              <FaShieldAlt /> Verified Professionals
+
+            <div className="feature-item">
+
+              <div className="feature-icon blue">
+                <FaShieldAlt />
+              </div>
+
+              <div>
+                <h4>Verified Professionals</h4>
+                <p>Trusted & Background Checked</p>
+              </div>
+
             </div>
-            <div>
-              <FaThumbsUp /> Quality Service
+
+            <div className="feature-item">
+
+              <div className="feature-icon green">
+                <FaThumbsUp />
+              </div>
+
+              <div>
+                <h4>Quality Service</h4>
+                <p>100% Satisfaction</p>
+              </div>
+
             </div>
-            <div>
-              <FaUsers /> Secure Payments
+
+            <div className="feature-item">
+
+              <div className="feature-icon purple">
+                <FaUsers />
+              </div>
+
+              <div>
+                <h4>Secure Payments</h4>
+                <p>Safe & Encrypted</p>
+              </div>
+
             </div>
+
           </div>
+
         </div>
 
-        {/* ✅ UPDATED IMAGE */}
+        {/* RIGHT IMAGE */}
+
         <div className="hero-right">
-          <img src={A1} alt="ProNearby App Preview" />
+
+          <div className="image-bg"></div>
+
+          <img
+            src={A1}
+            alt="App Preview"
+          />
+
         </div>
+
       </section>
 
-      {/* Why Section */}
+      {/* ================= WHY SECTION ================= */}
+
       <section className="why">
-        <h2>Making Home Services Simple & Reliable</h2>
-        <p>We bring convenience, quality and trust together.</p>
+
+        <span className="why-tag">
+          WHY CHOOSE PRONEARBY
+        </span>
+
+        <h2>
+          Making Home Services
+          Simple & Reliable
+        </h2>
+
+        <p>
+          We bring convenience, quality and trust
+          together for a seamless experience.
+        </p>
+
+        {/* GRID */}
 
         <div className="features-grid">
+
           <div className="feature-card">
+
+            <div className="card-icon blue-card">
+              <FaTools />
+            </div>
+
             <h4>Wide Range of Services</h4>
-            <p>Cleaning, repair, electrical and more.</p>
+
+            <p>
+              From cleaning to repairs, we offer
+              a wide range of home services.
+            </p>
+
           </div>
 
           <div className="feature-card">
+
+            <div className="card-icon green-card">
+              <FaCalendarCheck />
+            </div>
+
             <h4>Easy Booking</h4>
-            <p>Book services in just a few taps.</p>
+
+            <p>
+              Book your services in just a few
+              taps quickly and conveniently.
+            </p>
+
           </div>
 
           <div className="feature-card">
+
+            <div className="card-icon purple-card">
+              <FaShieldAlt />
+            </div>
+
             <h4>Verified Professionals</h4>
-            <p>Background checked experts.</p>
+
+            <p>
+              All our professionals are verified
+              and trained.
+            </p>
+
           </div>
 
           <div className="feature-card">
+
+            <div className="card-icon orange-card">
+              <FaMoneyBillWave />
+            </div>
+
             <h4>Affordable Pricing</h4>
-            <p>Transparent and fair pricing.</p>
+
+            <p>
+              Get the best quality services
+              at transparent pricing.
+            </p>
+
           </div>
 
           <div className="feature-card">
+
+            <div className="card-icon pink-card">
+              <FaHeadset />
+            </div>
+
             <h4>Customer Support</h4>
-            <p>24/7 assistance for users.</p>
+
+            <p>
+              Our support team is always
+              ready to assist you.
+            </p>
+
           </div>
+
         </div>
+
       </section>
 
-      {/* Stats */}
+      {/* ================= STATS ================= */}
+
       <section className="stats">
-        <div>10K+ Customers</div>
-        <div>5K+ Providers</div>
-        <div>99% Satisfaction</div>
-        <div>24/7 Support</div>
+
+        <div className="stat-box">
+          <h2>10K+</h2>
+          <p>Happy Customers</p>
+        </div>
+
+        <div className="stat-box">
+          <h2>5K+</h2>
+          <p>Service Providers</p>
+        </div>
+
+        <div className="stat-box">
+          <h2>99%</h2>
+          <p>Satisfaction Rate</p>
+        </div>
+
+        <div className="stat-box">
+          <h2>24/7</h2>
+          <p>Customer Support</p>
+        </div>
+
       </section>
 
     </div>

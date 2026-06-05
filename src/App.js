@@ -9,7 +9,9 @@ import AdminDashboard from "./ADMINDASHBOARD/JS/Admindashboard";
 import ProviderDashboard from "./PROVIDERDASHBOARD/JS/Providerdashboard";
 import LandingPage from "./LANDINGPAGE/JS/Landingpage";
 import OtpVerification from "./OTPVERIFICATION/JS/verify-otp";
-import Otptemplate from "./OTPTEMPLATE/JS/Otptemplate";
+
+
+
 
 function App() {
   return (
@@ -23,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-otp" element={<OtpVerification />} />
-        <Route path="/otptemlate" element={<Otptemplate />} />
+       
 
         {/* 👤 Dashboards */}
         <Route path="/userdashboard" element={<UserDashboard />} />
@@ -32,6 +34,9 @@ function App() {
 
         {/* 🔁 Optional direct access */}
       <Route path="/Landingpage" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
+
+        <Route path="/signup" element={<Signup />} />
 
       </Routes>
     </Router>
