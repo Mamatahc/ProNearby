@@ -1,84 +1,101 @@
 package com.pronearbymain.Auth;
 
+import com.pronearbymain.DTO.AuthResponse;
+import com.pronearbymain.DTO.LoginRequestDTO;
 import com.pronearbymain.DTO.OtpRequest;
 import com.pronearbymain.DTO.SignupRequest;
-import com.pronearbymain.entity.UserEntity;
-import com.pronearbymain.entity.Role;
-import com.pronearbymain.repo.UserRepository;
+import com.pronearbymain.service.AdminService;
+import com.pronearbymain.service.ProviderService;
+import com.pronearbymain.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private AdminService adminService;
 
     @Autowired
-    private EmailService emailService;
+    private ProviderService providerService;
 
+    // =========================
+    // ✅ SIGNUP
+    // =========================
     public String signup(SignupRequest request) {
 
-        // 1. Check email
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            return "User already exists!";
+        if(request.getRole().equalsIgnoreCase("USER")) {
+            return userService.createUser(request);
         }
 
-        // 2. Generate OTP
-        String otp = generateOtp();
-        System.out.println("OTP Generated: " + otp);
+        if(request.getRole().equalsIgnoreCase("PROVIDER")) {
+            return providerService.createProvider(request);
+        }
 
-        // 3. Send OTP
-        emailService.sendOtp(request.getEmail(), otp);
+        return "Invalid Role";
+    }    // =========================
+    // ✅ VERIFY OTP
+    // =========================
+    public String verifyOtp(OtpRequest request) {
 
-        // 4. Convert DTO → Entity
-        UserEntity user = new UserEntity();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        String response;
 
-        // 🔐 Encrypt password
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        response = userService.verifyUserOtp(request);
+        if(response != null) {
+            return response;
+        }
 
-        user.setRole(Role.USER);
+        response = adminService.verifyAdminOtp(request);
+        if(response != null) {
+            return response;
+        }
 
-        // ✅ Store OTP + verification flag
-        user.setOtp(otp);
-        user.setIsVerified(false);   // ✅ FIXED
+        response = providerService.verifyProviderOtp(request);
+        if(response != null) {
+            return response;
+        }
 
-        // 5. Save
-        userRepository.save(user);
-
-        return "User registered successfully! OTP sent to email.";
-    }  
-       private String generateOtp() {
-        return String.valueOf((int)(Math.random() * 9000) + 1000);
+        return "User Not Found ❌";
     }
-       
-       public String verifyOtp(OtpRequest request) {
+    
+    public String resendOtp(String email) {
 
-    	    // 1. Find user by email
-    	    UserEntity user = userRepository.findByEmail(request.getEmail())
-    	            .orElseThrow(() -> new RuntimeException("User not found"));
+        String response;
 
-    	    // 2. Check OTP
-    	    if (user.getOtp() != null && user.getOtp().equals(request.getOtp())) {
+        response = userService.resendOtp(email);
+        if(response != null) {
+            return response;
+        }
 
-    	        // 3. Mark user as verified
-    	        user.setIsVerified(true);
+        return "User Not Found";
+    }
 
-    	        // 4. Clear OTP (important)
-    	        user.setOtp(null);
+    // =========================
+    // ✅ LOGIN
+    // =========================
+    public AuthResponse login(LoginRequestDTO request) {
 
-    	        userRepository.save(user);
+        AuthResponse response;
 
-    	        return "OTP Verified Successfully ✅";
-    	    }
+        response = userService.loginUser(request);
+        if(response != null) {
+            return response;
+        }
 
-    	    return "Invalid OTP ❌";
-    	}
+        response = adminService.loginAdmin(request);
+        if(response != null) {
+            return response;
+        }
+
+        response = providerService.loginProvider(request);
+        if(response != null) {
+            return response;
+        }
+
+        throw new RuntimeException("User Not Found ❌");
+    }
 }

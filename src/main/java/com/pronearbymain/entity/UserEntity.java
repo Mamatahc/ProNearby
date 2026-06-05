@@ -23,15 +23,15 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    // ✅ OTP
+
     @Column(name = "otp")
     private String otp;
 
-    // ✅ VERIFIED
+
     @Column(name = "is_verified")
     private Boolean isVerified;
 
-    // ===== GETTERS =====
+
 
     public Long getId() { return id; }
     public String getName() { return name; }
@@ -41,7 +41,7 @@ public class UserEntity {
     public String getOtp() { return otp; }
     public Boolean getIsVerified() { return isVerified; }
 
-    // ===== SETTERS =====
+    
 
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
